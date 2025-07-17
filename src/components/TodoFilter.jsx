@@ -1,3 +1,5 @@
+import React from 'react';
+
 const TodoFilter = ({ filter, onFilterChange }) => {
     return (
         <div className="my-5 p-2.5 bg-gray-100 rounded">
@@ -30,4 +32,4 @@ const TodoFilter = ({ filter, onFilterChange }) => {
     );
 };
 
-export default TodoFilter;
+export default React.memo(TodoFilter);

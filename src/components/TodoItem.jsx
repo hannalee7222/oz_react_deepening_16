@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import React from 'react';
 
 const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [editText, setEditText] = useState(todo.text);
+    const inputRef = useRef();
 
     const handleEdit = () => {
-        onEdit(todo.id, editText);
+        const newText = inputRef.current.value.trim();
+        if (!newText) return;
+        onEdit(todo.id, newText);
         setIsEditing(false);
     };
 
@@ -17,8 +20,8 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
                 <div className="flex flex-1">
                     <input
                         type="text"
-                        value={editText}
-                        onChange={(e) => setEditText(e.target.value)}
+                        defaultValue={todo.text}
+                        ref={inputRef}
                         className="flex-1 mr-2 p-1.5 border border-gray-300 rounded"
                     />
                     <button onClick={handleEdit} className="px-2 py-1 bg-blue-500 text-white rounded mr-1">
@@ -48,4 +51,4 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }) => {
     );
 };
 
-export default TodoItem;
+export default React.memo(TodoItem);
